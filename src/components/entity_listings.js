@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchEntities } from '../actions/index';
 import { Link } from 'react-router';
-import RaisedButton from 'material-ui/lib/raised-button';
+import CircularProgress from 'material-ui/lib/circular-progress';
+import List from 'material-ui/lib/lists/list';
+import ListItem from 'material-ui/lib/lists/list-item';
 
 class EntityListings extends Component {
   componentWillMount() {
@@ -10,22 +12,27 @@ class EntityListings extends Component {
   }
 
   renderEntities() {
-
     return this.props.entities.map((entity) => {
-
-      console.log(entity);
       return (
-        <li className="list-group-item" key={entity.id}>
-          <Link to={"entity/" + entity.nid}>
-            <strong>{entity.title}</strong>
-          </Link>
-          <RaisedButton label="Default" />
+        <li key={entity.id}>
+          <List>
+            <Link to={"entity/" + entity.nid} key={'entity-' + entity.id}>
+              <ListItem
+                primaryText={entity.title}
+                secondaryText={entity.type.name}
+              />
+            </Link>
+          </List>
         </li>
       );
     });
   }
 
   render() {
+    if (!this.props.entities.length) {
+      return <CircularProgress />;
+    }
+
     return (
       <div>
         <ul className="list-group">
