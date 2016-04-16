@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchEntities } from '../actions/index';
 import { Link } from 'react-router';
+import RaisedButton from 'material-ui/lib/raised-button';
 
 class EntityListings extends Component {
   componentWillMount() {
@@ -18,6 +19,7 @@ class EntityListings extends Component {
           <Link to={"entity/" + entity.nid}>
             <strong>{entity.title}</strong>
           </Link>
+          <RaisedButton label="Default" />
         </li>
       );
     });

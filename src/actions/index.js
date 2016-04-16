@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 export const FETCH_ENTITIES = 'FETCH_ENTITIES';
-export const FETCH_ENTITY = 'FETCH_ENTITY';
-export const FETCH_LOCATIONS = 'FETCH_LOCATIONS';
+export const FETCH_ENTITY = 'FETCH_ENTITY';;
 
 
 const ENTITIES_URL = 'http://entity-cms.local/api/v1/entities';
@@ -22,15 +21,6 @@ export function fetchEntity(id) {
 
   return {
     type: FETCH_ENTITY,
-    payload: request
-  };
-}
-
-export function fetchEntities() {
-  const request = axios.get(LOCATIONS_URL);
-
-  return {
-    type: FETCH_LOCATIONS,
     payload: request
   };
 }

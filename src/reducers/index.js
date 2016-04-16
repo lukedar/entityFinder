@@ -4,7 +4,6 @@ import { reducer as formReducer } from 'redux-form';
 
 const rootReducer = combineReducers({
   entities: PostsReducer
-  locations: LocationsReducer
 });
 
 export default rootReducer;
