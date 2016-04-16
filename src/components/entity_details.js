@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchEntity, deletePost } from '../actions/index';
 import { Link } from 'react-router';
+import CircularProgress from 'material-ui/lib/circular-progress';
 
 class EntityDetails extends Component {
   static contextTypes = {
@@ -15,8 +16,8 @@ class EntityDetails extends Component {
   render() {
     const { entity } = this.props;
 
-    if (!entity) {
-      return <div>Loading...</div>;
+    if (!entity || entity[0].nid !== this.props.params.id) {
+      return <CircularProgress />;
     }
 
     return (
