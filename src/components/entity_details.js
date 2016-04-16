@@ -26,14 +26,13 @@ class EntityDetails extends Component {
         <p>{entity[0].description.value}</p>
         <p>Date: {entity[0].date.value}</p>
         <p>Location: {entity[0].location.title}</p>
+        <p>Type: {entity[0].type.name}</p>
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  console.log(state);
-
   return { entity: state.entities.activeEntity };
 }
 

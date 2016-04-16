@@ -15,6 +15,13 @@ export default function(state = INITIAL_STATE, action) {
 	    	...state, 
 	    	all: action.payload.data 
 	    };
+
+
+	  case FETCH_LOCATIONS:
+	    return { 
+	    	...state, 
+	    	locations: action.payload.data 
+	    };
 	  
 	  default:
 	    return state;
