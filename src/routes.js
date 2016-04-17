@@ -11,7 +11,8 @@ export default (
   <Route path="/" component={App}>
     <IndexRoute component={EntityListings} />
     <Route path="entity/:id" component={EntityDetails} />
-    <Route path='locations' component={Locations} />
-    <Route path="location/:id" component={LocationDetails} />
+    <Route path="locations" component={Locations} />
+    <Route path="locations/:id" component={Locations} />
+    <Route path="locations/:id/details" component={LocationDetails} />
   </Route>
 );
