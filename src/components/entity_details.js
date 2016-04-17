@@ -5,9 +5,15 @@ import CircularProgress from 'material-ui/lib/circular-progress';
 import Card from 'material-ui/lib/card/card';
 import CardTitle from 'material-ui/lib/card/card-title';
 import CardText from 'material-ui/lib/card/card-text';
-import FlatButton from 'material-ui/lib/flat-button';
+import RaisedButton from 'material-ui/lib/raised-button';
 import FontIcon from 'material-ui/lib/font-icon';
 
+const styles = {
+  button: {
+    margin: 12,
+    float: 'right'
+  }
+};
 
 class EntityDetails extends Component {
   static contextTypes = {
@@ -35,12 +41,13 @@ class EntityDetails extends Component {
               {entity[0].description.value} <br/>
             </CardText>
         </Card>
-        <FlatButton
+
+        <RaisedButton
           label="Location"
           linkButton={true}
           href={'/locations/' + entity[0].location.nid + '/details'}
           secondary={true}
-          icon={<FontIcon className="muidocs-icon-custom-github" />}
+          style={styles.button}
         />
       </div>
     );
