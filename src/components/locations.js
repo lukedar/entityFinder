@@ -9,7 +9,12 @@ class Locations extends Component {
 
   renderLocations() {
     return this.props.locations.map((location) => {
-      
+      return (
+        <li key={location.id}>
+          {location.title}
+          {location.title}
+        </li>
+      )
     });
   }
 
@@ -25,9 +30,6 @@ class Locations extends Component {
 }
 
 function mapStateToProps(state) {
-
-  console.log(state);
-
   return { locations: state.locations.all };
 }
 

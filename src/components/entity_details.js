@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchEntity, deletePost } from '../actions/index';
+import { fetchEntity } from '../actions/index';
 import CircularProgress from 'material-ui/lib/circular-progress';
 import Card from 'material-ui/lib/card/card';
 import CardTitle from 'material-ui/lib/card/card-title';
@@ -42,4 +42,4 @@ function mapStateToProps(state) {
   return { entity: state.entities.activeEntity };
 }
 
-export default connect(mapStateToProps, { fetchEntity, deletePost })(EntityDetails);
+export default connect(mapStateToProps, { fetchEntity })(EntityDetails);
