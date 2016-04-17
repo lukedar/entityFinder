@@ -13,10 +13,15 @@ class EntityListings extends Component {
 
   renderEntities() {
     return this.props.entities.map((entity) => {
+      console.log(entity);
+
+
+
       return (
         <li key={entity.id}>
           <List>
             <Link to={"entity/" + entity.nid} key={'entity-' + entity.id}>
+         
               <ListItem
                 primaryText={entity.title}
                 secondaryText={entity.type.name}

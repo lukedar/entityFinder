@@ -5,6 +5,8 @@ import CircularProgress from 'material-ui/lib/circular-progress';
 import Card from 'material-ui/lib/card/card';
 import CardTitle from 'material-ui/lib/card/card-title';
 import CardText from 'material-ui/lib/card/card-text';
+import FlatButton from 'material-ui/lib/flat-button';
+import FontIcon from 'material-ui/lib/font-icon';
 
 
 class EntityDetails extends Component {
@@ -23,7 +25,11 @@ class EntityDetails extends Component {
       return <CircularProgress />;
     }
 
+    console.log();
+
     return (
+
+
       <div>
         <Card>
           <CardTitle title={entity[0].title} subtitle={entity[0].type.name} />
@@ -33,6 +39,13 @@ class EntityDetails extends Component {
               {entity[0].description.value} <br/>
             </CardText>
         </Card>
+        <FlatButton
+          label="Location"
+          linkButton={true}
+          href={'/locations/' + entity[0].location.nid + '/details'}
+          secondary={true}
+          icon={<FontIcon className="muidocs-icon-custom-github" />}
+        />
       </div>
     );
   }

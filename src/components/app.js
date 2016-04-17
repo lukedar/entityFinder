@@ -30,8 +30,10 @@ export default class App extends Component {
 	          open={this.state.open}
 	          onRequestChange={open => this.setState({open})}
 	        >
-	        <MenuItem onTouchTap={this.handleClose}><Link to={'/'}>Events</Link></MenuItem>
-	        <MenuItem onTouchTap={this.handleClose}><Link to={'/locations'}>Locations</Link></MenuItem>
+	        <Link to={'/'}><MenuItem onTouchTap={this.handleClose}>Events</MenuItem></Link>
+	        <Link to={'/locations'}><MenuItem onTouchTap={this.handleClose}>Locations</MenuItem></Link>
+	        <Link to={'/locations'}><MenuItem onTouchTap={this.handleClose}>Search</MenuItem></Link>
+	        <Link to={'/locations'}><MenuItem onTouchTap={this.handleClose}>My Events</MenuItem></Link>
 	        </LeftNav>
         {this.props.children}
       </div>
