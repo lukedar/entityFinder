@@ -6,11 +6,12 @@ import Card from 'material-ui/lib/card/card';
 import CardTitle from 'material-ui/lib/card/card-title';
 import CardText from 'material-ui/lib/card/card-text';
 import RaisedButton from 'material-ui/lib/raised-button';
-import FontIcon from 'material-ui/lib/font-icon';
+import PlaceIcon from 'material-ui/lib/svg-icons/maps/place';
 
+console.log(Icons);
 const styles = {
   button: {
-    margin: 12,
+    margin: 15,
     float: 'right'
   }
 };
@@ -36,18 +37,19 @@ class EntityDetails extends Component {
         <Card>
           <CardTitle title={entity[0].title} subtitle={entity[0].type.name} />
             <CardText>
-              <strong>Date</strong>:{entity[0].date.value}<br/>
-              <strong>Location</strong>: {entity[0].location.title}<br/><br/>
+              <strong>Date </strong>:{entity[0].date.value}<br/>
+              <strong>Location </strong>: {entity[0].location.title}<br/><br/>
               {entity[0].description.value} <br/>
             </CardText>
         </Card>
-
+        
         <RaisedButton
           label="Location"
           linkButton={true}
           href={'/locations/' + entity[0].location.nid + '/details'}
           secondary={true}
           style={styles.button}
+          icon={ <PlaceIcon/>}
         />
       </div>
     );

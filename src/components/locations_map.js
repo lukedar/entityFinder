@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchLocations, fetchLocation } from '../actions/index';
+import { GoogleMapLoader, GoogleMap, Marker } from "react-google-maps";
+import PlaceIcon from 'material-ui/lib/svg-icons/maps/place';
 
 class LocationsMap extends Component {
   componentWillMount() {
@@ -16,8 +18,9 @@ class LocationsMap extends Component {
     return this.props.locations.map((location) => {
       return (
         <li key={location.id}>
-          {location.title}
-          {location.title}
+          {location.title}<br/>
+          lat: {location.marker.lat} <br/>
+          lng: {location.marker.lng}
         </li>
       )
     });
