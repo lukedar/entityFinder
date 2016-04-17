@@ -5,6 +5,7 @@ import CircularProgress from 'material-ui/lib/circular-progress';
 import Card from 'material-ui/lib/card/card';
 import CardTitle from 'material-ui/lib/card/card-title';
 import CardText from 'material-ui/lib/card/card-text';
+import EntitiesByLocation from './entity_listings';
 
 
 class LocationDetails extends Component {
@@ -19,6 +20,8 @@ class LocationDetails extends Component {
   render() {
     const { location } = this.props;
 
+
+
     if (!location || location[0].nid !== this.props.params.id) {
       return <CircularProgress />;
     }
@@ -31,6 +34,7 @@ class LocationDetails extends Component {
               {location[0].description.value} <br/>
             </CardText>
         </Card>
+        <EntitiesByLocation locationId={location[0].nid} listingsTitle={'Upcoming Events'}/>
       </div>
     );
   }

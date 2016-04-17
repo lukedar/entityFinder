@@ -25,11 +25,7 @@ class EntityDetails extends Component {
       return <CircularProgress />;
     }
 
-    console.log();
-
     return (
-
-
       <div>
         <Card>
           <CardTitle title={entity[0].title} subtitle={entity[0].type.name} />

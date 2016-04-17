@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export const FETCH_ENTITIES = 'FETCH_ENTITIES';
 export const FETCH_ENTITY = 'FETCH_ENTITY';
+export const FETCH_ENTITIES_BY_LOCATION = 'FETCH_ENTITIES_BY_LOCATION';
 export const FETCH_LOCATIONS = 'FETCH_LOCATIONS'
 export const FETCH_LOCATION = 'FETCH_LOCATION'
 
@@ -22,6 +23,15 @@ export function fetchEntity(id) {
 
   return {
     type: FETCH_ENTITY,
+    payload: request
+  };
+}
+
+export function fetchEntitiesByLocation(id) {
+  const request = axios.get(`${ENTITIES_URL}/?location=${id}`);
+
+  return {
+    type: FETCH_ENTITIES_BY_LOCATION,
     payload: request
   };
 }

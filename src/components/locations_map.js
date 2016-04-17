@@ -13,16 +13,6 @@ class LocationsMap extends Component {
   }
 
   renderLocations() {
-
-    console.log(this.props);
-
-    return (
-      <li key={location.id}>
-        {location.title}
-        {location.title}
-      </li>
-    )
-
     return this.props.locations.map((location) => {
       return (
         <li key={location.id}>
@@ -45,9 +35,6 @@ class LocationsMap extends Component {
 }
 
 function mapStateToProps(state) {
-
-  console.log(state);
-
   return { 
     locations: state.locations.all,
     location: state.locations.activeLocation
