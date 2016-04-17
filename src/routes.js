@@ -4,7 +4,7 @@ import { Route, IndexRoute } from 'react-router';
 import App from './components/app';
 import EntityListings from './components/entity_listings';
 import EntityDetails from './components/entity_details';
-import Locations from './components/locations';
+import Locations from './components/locations_map';
 import LocationDetails from './components/location_details';
 
 export default (

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchLocations, fetchLocation } from '../actions/index';
 
-class Locations extends Component {
+class LocationsMap extends Component {
   componentWillMount() {
     if (this.props.params.id) {
       this.props.fetchLocation(this.props.params.id);
@@ -13,6 +13,9 @@ class Locations extends Component {
   }
 
   renderLocations() {
+
+    console.log(this.props);
+
     return (
       <li key={location.id}>
         {location.title}
@@ -42,10 +45,13 @@ class Locations extends Component {
 }
 
 function mapStateToProps(state) {
+
+  console.log(state);
+
   return { 
     locations: state.locations.all,
     location: state.locations.activeLocation
    };
 }
 
-export default connect(mapStateToProps, { fetchLocations, fetchLocation })(Locations);
+export default connect(mapStateToProps, { fetchLocations, fetchLocation })(LocationsMap);
