@@ -1,8 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchEntity, deletePost } from '../actions/index';
-import { Link } from 'react-router';
 import CircularProgress from 'material-ui/lib/circular-progress';
+import Card from 'material-ui/lib/card/card';
+import CardTitle from 'material-ui/lib/card/card-title';
+import CardText from 'material-ui/lib/card/card-text';
+
 
 class EntityDetails extends Component {
   static contextTypes = {
@@ -22,12 +25,14 @@ class EntityDetails extends Component {
 
     return (
       <div>
-        <Link to="/">Back To Index</Link>
-        <h3>{entity[0].title}</h3>
-        <p>{entity[0].description.value}</p>
-        <p>Date: {entity[0].date.value}</p>
-        <p>Location: {entity[0].location.title}</p>
-        <p>Type: {entity[0].type.name}</p>
+        <Card>
+          <CardTitle title={entity[0].title} subtitle={entity[0].type.name} />
+            <CardText>
+              <strong>Date</strong>:{entity[0].date.value}<br/>
+              <strong>Location</strong>: {entity[0].location.title}<br/><br/>
+              {entity[0].description.value} <br/>
+            </CardText>
+        </Card>
       </div>
     );
   }

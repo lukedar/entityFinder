@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
-import PostsReducer from './reducer_posts';
-import { reducer as formReducer } from 'redux-form';
+import EntitiesReducer from './reducer_entities';
+import LocationsReducer from './reducer_locations';
 
 const rootReducer = combineReducers({
-  entities: PostsReducer
+  entities: EntitiesReducer,
+  locations: LocationsReducer
 });
 
 export default rootReducer;
