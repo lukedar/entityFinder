@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchLocations, fetchLocation } from '../actions/index';
-import { GoogleMapLoader, GoogleMap, Marker } from "react-google-maps";
-import PlaceIcon from 'material-ui/lib/svg-icons/maps/place';
+import { GoogleMapLoader, GoogleMap, Marker } from 'react-google-maps';
 
 class LocationsMap extends Component {
   componentWillMount() {
@@ -26,13 +25,25 @@ class LocationsMap extends Component {
     });
   }
 
+  getMapRefObject(map) {
+    console.log(map);
+    return map;
+  }
+
   render() {
     return (
-      <div>
-        <ul className="list-group">
-          {this.renderLocations()}
-        </ul>
-      </div>
+      <GoogleMapLoader
+        containerElement={ <div 
+          className='locations-map' 
+          style={{height: '100%', width: '100%', position: 'absolute', top: '0', left: '0'}} /> }
+        googleMapElement={
+          <GoogleMap
+            ref={this.getMapRefObject}
+            defaultZoom={3}
+            defaultCenter={{lat: -25.363882, lng: 131.044922}}>
+          </GoogleMap>
+        }
+      />
     );
   }
 }

@@ -8,7 +8,6 @@ import CardText from 'material-ui/lib/card/card-text';
 import RaisedButton from 'material-ui/lib/raised-button';
 import PlaceIcon from 'material-ui/lib/svg-icons/maps/place';
 
-console.log(Icons);
 const styles = {
   button: {
     margin: 15,
@@ -37,8 +36,8 @@ class EntityDetails extends Component {
         <Card>
           <CardTitle title={entity[0].title} subtitle={entity[0].type.name} />
             <CardText>
-              <strong>Date </strong>:{entity[0].date.value}<br/>
-              <strong>Location </strong>: {entity[0].location.title}<br/><br/>
+              <strong>Date</strong>: {entity[0].date.value}<br/>
+              <strong>Location</strong>: {entity[0].location.title}<br/><br/>
               {entity[0].description.value} <br/>
             </CardText>
         </Card>

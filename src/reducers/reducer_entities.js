@@ -8,13 +8,13 @@ export default function(state = INITIAL_STATE, action) {
 	    return { 
 	    	...state, 
 	    	all: action.payload.data 
-	    };
+	   };
 
 	  case FETCH_ENTITY:
-	    return { 
+	  	return { 
 	    	...state, 
 	    	activeEntity: action.payload.data 
-	    };
+	  };
 	    
 	  default:
 	    return state;
