@@ -4,10 +4,10 @@ import { fetchLocations, fetchLocation } from '../actions/index';
 import { GoogleMapLoader, GoogleMap, Marker } from 'react-google-maps';
 
 class LocationsMap extends Component {
-  getInitialState() {
-    return {
-        markers: []
-    };
+  constructor(props) {
+    super(props);
+
+    this.state = { markers: [] };
   }
 
   componentWillMount() {
@@ -19,18 +19,6 @@ class LocationsMap extends Component {
     }
   }
 
-  renderLocations() {
-    return this.props.locations.map((location) => {
-      return (
-        <li key={location.id}>
-          {location.title}<br/>
-          lat: {location.marker.lat} <br/>
-          lng: {location.marker.lng}
-        </li>
-      )
-    });
-  }
-
   getMapRefObject(map) {
     return map;
   }
@@ -39,6 +27,8 @@ class LocationsMap extends Component {
       var gmaps = google && google.maps,
       markers = [],
       bounds = new gmaps.LatLngBounds();
+
+      console.log('set map data', locations);
 
       locations.map(function(location, index){
           var latLng = new gmaps.LatLng(location.marker.lat, location.marker.lng);
@@ -56,10 +46,12 @@ class LocationsMap extends Component {
           });
       }.bind(this));
 
-      // this.setState({
-      //     markers: markers,
-      //     bounds: bounds
-      // });
+      this.setState({
+          markers: markers,
+          bounds: bounds
+      });
+
+      console.log(this.state.markers);
   }
 
   _renderMarkers() {
@@ -78,18 +70,13 @@ class LocationsMap extends Component {
     // }.bind(this));
   }
 
-  componentWillMount() {
-    console.log('will mount', this.props.locations);  
+  componentDidMount() {
+    console.log('did mount', this.props.locations);
+
+    this.setMapData(this.props.locations)
   }
 
   render() {
-
-    console.log(this.props.locations);
-
-    if (!this.props.locations) {
-      this.setMapData(this.props.locations);
-    }
-
     return (
       <GoogleMapLoader
         containerElement={ <div 
