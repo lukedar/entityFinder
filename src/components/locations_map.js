@@ -9,13 +9,9 @@ class LocationsMap extends Component {
     this.state = { markers: [] };
   }
 
-  componentWillUpdate() {
-    this.setMapData(this.props.locationsData);
-    console.log('will update', this.props.locationsData);
-  }
-
   componentWillMount() {
-    console.log('will mount', this.props.locationsData);
+    this.setMapData(this.props.locationsData);
+    console.log('will mount');
   }
 
   getMapRefObject(map) {
@@ -27,6 +23,7 @@ class LocationsMap extends Component {
       markers = [],
       bounds = new gmaps.LatLngBounds();
       locations.map(function(location, index){
+
           var latLng = new gmaps.LatLng(location.marker.lat, location.marker.lng);
           bounds.extend(latLng);
 
@@ -42,23 +39,22 @@ class LocationsMap extends Component {
           });
       }.bind(this));
 
-      console.log(markers);
+     this.setState({markers: markers});
   }
 
   _renderMarkers() {
+    return this.state.markers.map(function(marker){
+      console.log('marker.map', marker);
 
-    // this.props.locations
-
-    // return this.state.markers.map(function(marker){
-    //   return (
-    //     <Marker
-    //       onClick={this._handleOpenInfo.bind(this, marker)}
-    //       mapHolderRef={this.props.mapHolderRef}
-    //       {...marker}>
-    //       {marker.showInfo && !this.props.detailView ? this._renderInfoWindow(marker) : null}
-    //     </Marker>
-    //   );
-    // }.bind(this));
+      return (
+        <Marker
+          key={marker.key}
+          mapHolderRef={this.props.mapHolderRef}
+          position = {new google.maps.LatLng(marker.position.lat, marker.position.lng)}
+        >
+        </Marker>
+      );
+    }.bind(this));
   }
 
   render() {
@@ -70,7 +66,7 @@ class LocationsMap extends Component {
         googleMapElement={
           <GoogleMap
             defaultZoom={3}
-            defaultCenter={{lat: -25.363882, lng: 131.044922}}>
+            defaultCenter={{lat: 51.550462, lng: -0.0152}}>
             {this._renderMarkers()}
           </GoogleMap>
         }
