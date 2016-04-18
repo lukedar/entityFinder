@@ -6,17 +6,16 @@ import { GoogleMapLoader, GoogleMap, Marker } from 'react-google-maps';
 class LocationsMap extends Component {
   constructor(props) {
     super(props);
-
     this.state = { markers: [] };
   }
 
+  componentWillUpdate() {
+    this.setMapData(this.props.locationsData);
+    console.log('will update', this.props.locationsData);
+  }
+
   componentWillMount() {
-    if (this.props.params.id) {
-      this.props.fetchLocation(this.props.params.id);
-    } 
-    else {
-      this.props.fetchLocations();
-    }
+    console.log('will mount', this.props.locationsData);
   }
 
   getMapRefObject(map) {
@@ -27,9 +26,6 @@ class LocationsMap extends Component {
       var gmaps = google && google.maps,
       markers = [],
       bounds = new gmaps.LatLngBounds();
-
-      console.log('set map data', locations);
-
       locations.map(function(location, index){
           var latLng = new gmaps.LatLng(location.marker.lat, location.marker.lng);
           bounds.extend(latLng);
@@ -46,12 +42,7 @@ class LocationsMap extends Component {
           });
       }.bind(this));
 
-      this.setState({
-          markers: markers,
-          bounds: bounds
-      });
-
-      console.log(this.state.markers);
+      console.log(markers);
   }
 
   _renderMarkers() {
@@ -68,12 +59,6 @@ class LocationsMap extends Component {
     //     </Marker>
     //   );
     // }.bind(this));
-  }
-
-  componentDidMount() {
-    console.log('did mount', this.props.locations);
-
-    this.setMapData(this.props.locations)
   }
 
   render() {
@@ -94,11 +79,4 @@ class LocationsMap extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return { 
-    locations: state.locations.all,
-    location: state.locations.activeLocation
-   };
-}
-
-export default connect(mapStateToProps, { fetchLocations, fetchLocation })(LocationsMap);
+export default LocationsMap;

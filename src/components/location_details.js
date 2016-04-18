@@ -7,7 +7,6 @@ import CardTitle from 'material-ui/lib/card/card-title';
 import CardText from 'material-ui/lib/card/card-text';
 import EntitiesByLocation from './entity_listings';
 
-
 class LocationDetails extends Component {
   static contextTypes = {
     router: PropTypes.object
@@ -19,8 +18,6 @@ class LocationDetails extends Component {
 
   render() {
     const { location } = this.props;
-
-
 
     if (!location || location[0].nid !== this.props.params.id) {
       return <CircularProgress />;
