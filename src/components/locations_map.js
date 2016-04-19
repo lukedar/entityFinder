@@ -4,7 +4,8 @@ import { fetchLocations, fetchLocation } from '../actions/index';
 import { GoogleMapLoader, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
-import PlaceIcon from 'material-ui/lib/svg-icons/maps/place';
+import InfoIcon from 'material-ui/lib/svg-icons/action/info';
+import { Link } from 'react-router';
 
 class LocationsMap extends Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class LocationsMap extends Component {
               },
               key: location.nid,
               title: location.title,
-              locationIndex: location.nid,
+              nid: location.nid,
               showInfo: false
           });
       }.bind(this));
@@ -68,15 +69,15 @@ class LocationsMap extends Component {
   }
 
   renderInfoWindow(ref, marker) {
-    console.log(marker);
+    console.log(marker.nid);
 
     return (
       <InfoWindow 
         key={`${ref}_info_window`}
         onCloseclick={this.handleMarkerClose.bind(this, marker)} >
         <div>
-        {marker.title}
-        <Link to={'/locations/' + marker.nid + '/details'}>Location info</Link>
+        {marker.title}<br/>
+        <a href={'/locations/' + marker.nid + '/details'}><InfoIcon/></a>
         </div>
       </InfoWindow>
     );
