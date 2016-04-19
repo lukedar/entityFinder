@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchLocations, fetchLocation } from '../actions/index';
-import { GoogleMapLoader, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
+import { GoogleMapLoader, GoogleMap, Marker, InfoWindow, DirectionsRenderer } from 'react-google-maps';
 import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
 import InfoIcon from 'material-ui/lib/svg-icons/action/info';
@@ -12,12 +12,43 @@ class LocationsMap extends Component {
     super(props);
     this.state = { 
       markers: [], 
-      bounds: {}
+      bounds: {},
+      origin: new google.maps.LatLng(51.545184, -0.008862),
+      destination: {},
+      directions: true
     };
   }
 
   componentWillMount() {
-    this.setMapData(this.props.locationsData);
+    this.setMapData(this.props.locationData);
+
+    if (this.props.getDirections) {
+      this.setUpDirectionsService(this.props.locationData);
+    }
+  }
+
+  setUpDirectionsService(location) {
+    const destination = location[0].marker;
+
+    this.state.destination = new google.maps.LatLng(destination.lat, destination.lng);
+
+    console.log(this.state);
+
+    const DirectionsService = new google.maps.DirectionsService();
+
+    DirectionsService.route({
+      origin: this.state.origin,
+      destination: this.state.destination,
+      travelMode: google.maps.TravelMode.WALKING,
+    }, (result, status) => {
+      if (status === google.maps.DirectionsStatus.OK) {
+        this.setState({
+          directions: result,
+        });
+      } else {
+        console.error(`error fetching directions ${ result }`);
+      }
+    });
   }
 
   getMapRefObject(map) {
@@ -95,6 +126,8 @@ class LocationsMap extends Component {
   }
 
   render() {
+    const { origin, directions } = this.state;
+
     return (
       <GoogleMapLoader
         containerElement={ <div 
@@ -106,6 +139,7 @@ class LocationsMap extends Component {
             defaultCenter={this.state.bounds.getCenter()}
             >
             {this.renderMarkers()}
+            {directions ? <DirectionsRenderer directions={directions} /> : null}
           </GoogleMap>
         }
       />

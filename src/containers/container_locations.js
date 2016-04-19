@@ -28,10 +28,8 @@ class LocationsContainer extends Component {
     var locations = this.props.locations;
     var locationsMerge = this.props.location ? locations.concat(this.props.location) : locations;
 
-    console.log(locationsMerge);
-
     return(
-        <LocationsMap locationsData={locationsMerge} />
+        <LocationsMap locationData={locationsMerge} getDirections={locationsMerge.length === 1 || true}/>
       );
 
   }
