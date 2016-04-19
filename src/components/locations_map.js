@@ -17,7 +17,7 @@ class LocationsMap extends Component {
       bounds: {},
       origin: {},
       destination: {},
-      directions: false
+      directions: {}
     };
   }
 
@@ -154,6 +154,9 @@ class LocationsMap extends Component {
 
   render() {
     const { origin, directions } = this.state;
+
+    console.log(directions);
+
     return (
       <div>
         <GoogleMapLoader
