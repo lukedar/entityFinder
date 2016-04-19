@@ -45,7 +45,7 @@ class EntityDetails extends Component {
         <RaisedButton
           label="Location"
           linkButton={true}
-          href={'/locations/' + entity[0].location.nid + '/details'}
+          href={'/locations/' + entity[0].location.nid}
           secondary={true}
           style={styles.button}
           icon={ <PlaceIcon/>}
