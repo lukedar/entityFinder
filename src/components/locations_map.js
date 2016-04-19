@@ -5,7 +5,9 @@ import { GoogleMapLoader, GoogleMap, Marker, InfoWindow, DirectionsRenderer } fr
 import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
 import InfoIcon from 'material-ui/lib/svg-icons/action/info';
+import Directions from 'material-ui/lib/svg-icons/maps/directions';
 import { Link } from 'react-router';
+import RaisedButton from 'material-ui/lib/raised-button';
 
 class LocationsMap extends Component {
   constructor(props) {
@@ -13,9 +15,9 @@ class LocationsMap extends Component {
     this.state = { 
       markers: [], 
       bounds: {},
-      origin: new google.maps.LatLng(51.545184, -0.008862),
+      origin: {},
       destination: {},
-      directions: true
+      directions: false
     };
   }
 
@@ -23,32 +25,19 @@ class LocationsMap extends Component {
     this.setMapData(this.props.locationData);
 
     if (this.props.getDirections) {
-      this.setUpDirectionsService(this.props.locationData);
+      this.setDestination(this.props.locationData);
     }
   }
 
-  setUpDirectionsService(location) {
+  componentWillUpdate(nextProps, nextState) {
+    if (this.props.getDirections && this.state.directions) {
+      this.setDestination(this.props.locationData);
+    } 
+  }
+
+  setDestination(location) {
     const destination = location[0].marker;
-
     this.state.destination = new google.maps.LatLng(destination.lat, destination.lng);
-
-    console.log(this.state);
-
-    const DirectionsService = new google.maps.DirectionsService();
-
-    DirectionsService.route({
-      origin: this.state.origin,
-      destination: this.state.destination,
-      travelMode: google.maps.TravelMode.WALKING,
-    }, (result, status) => {
-      if (status === google.maps.DirectionsStatus.OK) {
-        this.setState({
-          directions: result,
-        });
-      } else {
-        console.error(`error fetching directions ${ result }`);
-      }
-    });
   }
 
   getMapRefObject(map) {
@@ -100,8 +89,6 @@ class LocationsMap extends Component {
   }
 
   renderInfoWindow(ref, marker) {
-    console.log(marker.nid);
-
     return (
       <InfoWindow 
         key={`${ref}_info_window`}
@@ -115,7 +102,6 @@ class LocationsMap extends Component {
   }
 
   handleMarkerClick(marker) {
-    console.log(marker);
     marker.showInfo = true;
     this.setState(this.state);
   }
@@ -125,26 +111,73 @@ class LocationsMap extends Component {
     this.setState(this.state);
   }
 
+  getUserGeolocationAndRenderDirection() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        const DirectionsService = new google.maps.DirectionsService();
+
+        DirectionsService.route({
+          origin: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+          destination: this.state.destination,
+          travelMode: google.maps.TravelMode.WALKING,
+        }, (result, status) => {
+          if (status === google.maps.DirectionsStatus.OK) {
+            this.setState({
+              directions: result,
+            });
+          } else {
+            console.error(`error fetching directions ${ result }`);
+          }
+        });
+
+        this.setState({
+          directions: true
+        });
+
+      }.bind(this));
+    } else {
+        alert('Geolocation is not supported by this browser.');
+    }
+  }
+
   render() {
     const { origin, directions } = this.state;
-
     return (
-      <GoogleMapLoader
-        containerElement={ <div 
-          className='locations-map' 
-          style={{height: '100%', width: '100%', position: 'absolute', top: '0', left: '0'}} /> }
-        googleMapElement={
-          <GoogleMap
-            defaultZoom={15}
-            defaultCenter={this.state.bounds.getCenter()}
-            >
-            {this.renderMarkers()}
-            {directions ? <DirectionsRenderer directions={directions} /> : null}
-          </GoogleMap>
-        }
-      />
+      <div>
+        <GoogleMapLoader
+          containerElement={ <div 
+            className='locations-map' 
+            style={{height: '100%', width: '100%', position: 'absolute', top: '0', left: '0'}} /> }
+          googleMapElement={
+            <GoogleMap
+              defaultZoom={15}
+              defaultCenter={this.state.bounds.getCenter()}
+              >
+              {this.renderMarkers()}
+              {directions ? <DirectionsRenderer directions={directions} /> : null}
+            </GoogleMap>
+          }
+        />
+        <RaisedButton
+          label="Get directions"
+          labelPosition="before"
+          secondary={true}
+          icon={<Directions/>}
+          onMouseDown={this.getUserGeolocationAndRenderDirection.bind(this)}
+          onTouchStart={this.getUserGeolocationAndRenderDirection.bind(this)}
+          style={styles.button}
+        />
+      </div>
     );
   }
 }
+
+const styles = {
+  button: {
+    margin: 12,
+    cursor: 'pointer',
+    float: 'right'
+  }
+};
 
 export default LocationsMap;
