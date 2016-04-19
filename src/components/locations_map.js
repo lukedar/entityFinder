@@ -7,6 +7,7 @@ class LocationsMap extends Component {
   constructor(props) {
     super(props);
     this.state = { markers: [] };
+    this.state = {bounds: {}};
   }
 
   componentWillMount() {
@@ -21,8 +22,8 @@ class LocationsMap extends Component {
       var gmaps = google && google.maps,
       markers = [],
       bounds = new gmaps.LatLngBounds();
-      locations.map(function(location, index){
 
+      locations.map(function(location, index){
           var latLng = new gmaps.LatLng(location.marker.lat, location.marker.lng);
           bounds.extend(latLng);
 
@@ -38,7 +39,10 @@ class LocationsMap extends Component {
           });
       }.bind(this));
 
-     this.setState({markers: markers});
+     this.setState({
+      markers: markers,
+      bounds: bounds
+    });
   }
 
   renderMarkers() {
@@ -55,9 +59,6 @@ class LocationsMap extends Component {
   }
 
   render() {
-
-    console.log(this.renderMarkers());
-
     return (
       <GoogleMapLoader
         containerElement={ <div 
@@ -66,7 +67,7 @@ class LocationsMap extends Component {
         googleMapElement={
           <GoogleMap
             defaultZoom={15}
-            defaultCenter={{lat: 51.550462, lng: -0.0152}}>
+            defaultCenter={this.state.bounds.getCenter()}>
             {this.renderMarkers()}
           </GoogleMap>
         }
