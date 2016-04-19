@@ -90,7 +90,7 @@ class LocationsMap extends Component {
   }
 
   handleMarkerClick(marker) {
-    console.log('maerker clicked');
+    console.log(marker);
     marker.showInfo = true;
     this.setState(this.state);
   }
@@ -101,19 +101,25 @@ class LocationsMap extends Component {
   }
 
   renderMarkers() {
-    return this.state.markers.map(function(marker){
+    return this.state.markers.map(function(marker, index){     
+      const ref = `marker-${index}`;
+
       return (
         <Marker
           key={marker.key}
+          ref={ref}
           mapHolderRef={this.props.mapHolderRef}
           position = {new google.maps.LatLng(marker.position.lat, marker.position.lng)}
           onClick={this.handleMarkerClick.bind(this, marker)}>
+          {marker.showInfo ? this.renderInfoWindow(ref, marker) : null}
         </Marker>
       );
     }.bind(this));
   }
 
   render() {
+    console.log(this.state.markers);
+
     return (
       <GoogleMapLoader
         containerElement={ <div 
