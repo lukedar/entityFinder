@@ -7,11 +7,16 @@ import CardTitle from 'material-ui/lib/card/card-title';
 import CardText from 'material-ui/lib/card/card-text';
 import RaisedButton from 'material-ui/lib/raised-button';
 import PlaceIcon from 'material-ui/lib/svg-icons/maps/place';
+import AddIcon from 'material-ui/lib/svg-icons/content/add';
 
 const styles = {
+  buttonWrapper: {
+    textAlign: 'right',
+    width: '100%'
+  },
+
   button: {
     margin: 15,
-    float: 'right'
   }
 };
 
@@ -41,15 +46,26 @@ class EntityDetails extends Component {
               {entity[0].description.value} <br/>
             </CardText>
         </Card>
-        
-        <RaisedButton
-          label="Location"
-          linkButton={true}
-          href={'/locations/' + entity[0].location.nid}
-          secondary={true}
-          style={styles.button}
-          icon={ <PlaceIcon/>}
-        />
+
+        <div style={styles.buttonWrapper}>
+          <RaisedButton
+            label="My Events"
+            linkButton={true}
+            href={'/locations/' + entity[0].location.nid}
+            secondary={true}
+            style={styles.button}
+            icon={<AddIcon/>}
+          />
+
+          <RaisedButton
+            label="Location"
+            linkButton={true}
+            href={'/locations/' + entity[0].location.nid}
+            secondary={true}
+            style={styles.button}
+            icon={<PlaceIcon/>}
+          />
+        </div>
       </div>
     );
   }
