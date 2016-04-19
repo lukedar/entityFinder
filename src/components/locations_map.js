@@ -30,7 +30,7 @@ class LocationsMap extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    if (this.props.getDirections && this.state.directions) {
+    if (this.props.getDirections) {
       this.setDestination(this.props.locationData);
     } 
   }
@@ -130,13 +130,25 @@ class LocationsMap extends Component {
           }
         });
 
-        this.setState({
-          directions: true
-        });
-
       }.bind(this));
     } else {
         alert('Geolocation is not supported by this browser.');
+    }
+  }
+
+  renderGerDirectionsButton() {
+    if (this.props.getDirections) {
+      return(
+        <RaisedButton
+          label="Get directions"
+          labelPosition="before"
+          secondary={true}
+          icon={<Directions/>}
+          onMouseDown={this.getUserGeolocationAndRenderDirection.bind(this)}
+          onTouchStart={this.getUserGeolocationAndRenderDirection.bind(this)}
+          style={styles.button}
+        /> 
+      );
     }
   }
 
@@ -158,15 +170,7 @@ class LocationsMap extends Component {
             </GoogleMap>
           }
         />
-        <RaisedButton
-          label="Get directions"
-          labelPosition="before"
-          secondary={true}
-          icon={<Directions/>}
-          onMouseDown={this.getUserGeolocationAndRenderDirection.bind(this)}
-          onTouchStart={this.getUserGeolocationAndRenderDirection.bind(this)}
-          style={styles.button}
-        />
+        {this.renderGerDirectionsButton()}
       </div>
     );
   }
