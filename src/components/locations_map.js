@@ -17,7 +17,7 @@ class LocationsMap extends Component {
       bounds: {},
       origin: {},
       destination: {},
-      directions: {}
+      directions: null
     };
   }
 
@@ -45,9 +45,9 @@ class LocationsMap extends Component {
   }
 
   setMapData(locations) {
-      var gmaps = google && google.maps,
-      markers = [],
-      bounds = new gmaps.LatLngBounds();
+      var gmaps = google && google.maps;
+      var markers = [];
+      var bounds = new gmaps.LatLngBounds();
 
       locations.map(function(location, index){
           var latLng = new gmaps.LatLng(location.marker.lat, location.marker.lng);
@@ -112,6 +112,7 @@ class LocationsMap extends Component {
   }
 
   getUserGeolocationAndRenderDirection() {
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
         const DirectionsService = new google.maps.DirectionsService();
@@ -154,8 +155,6 @@ class LocationsMap extends Component {
 
   render() {
     const { origin, directions } = this.state;
-
-    console.log(directions);
 
     return (
       <div>
