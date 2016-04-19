@@ -11,7 +11,6 @@ class LocationsMap extends Component {
 
   componentWillMount() {
     this.setMapData(this.props.locationsData);
-    console.log('will mount');
   }
 
   getMapRefObject(map) {
@@ -42,10 +41,8 @@ class LocationsMap extends Component {
      this.setState({markers: markers});
   }
 
-  _renderMarkers() {
+  renderMarkers() {
     return this.state.markers.map(function(marker){
-      console.log('marker.map', marker);
-
       return (
         <Marker
           key={marker.key}
@@ -58,6 +55,9 @@ class LocationsMap extends Component {
   }
 
   render() {
+
+    console.log(this.renderMarkers());
+
     return (
       <GoogleMapLoader
         containerElement={ <div 
@@ -65,9 +65,9 @@ class LocationsMap extends Component {
           style={{height: '100%', width: '100%', position: 'absolute', top: '0', left: '0'}} /> }
         googleMapElement={
           <GoogleMap
-            defaultZoom={3}
+            defaultZoom={15}
             defaultCenter={{lat: 51.550462, lng: -0.0152}}>
-            {this._renderMarkers()}
+            {this.renderMarkers()}
           </GoogleMap>
         }
       />
