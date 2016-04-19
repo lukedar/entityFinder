@@ -120,7 +120,7 @@ class LocationsMap extends Component {
         DirectionsService.route({
           origin: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
           destination: this.state.destination,
-          travelMode: google.maps.TravelMode.WALKING,
+          travelMode: google.maps.TravelMode.WALKING
         }, (result, status) => {
           if (status === google.maps.DirectionsStatus.OK) {
             this.setState({
@@ -130,7 +130,6 @@ class LocationsMap extends Component {
             console.error(`error fetching directions ${ result }`);
           }
         });
-
       }.bind(this));
     } else {
         alert('Geolocation is not supported by this browser.');
@@ -155,6 +154,8 @@ class LocationsMap extends Component {
 
   render() {
     const { origin, directions } = this.state;
+
+    console.log(directions);
 
     return (
       <div>
