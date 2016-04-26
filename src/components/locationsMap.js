@@ -155,8 +155,6 @@ class LocationsMap extends Component {
   render() {
     const { origin, directions } = this.state;
 
-    console.log(directions);
-
     return (
       <div>
         <GoogleMapLoader
