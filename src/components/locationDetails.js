@@ -5,7 +5,7 @@ import CircularProgress from 'material-ui/lib/circular-progress';
 import Card from 'material-ui/lib/card/card';
 import CardTitle from 'material-ui/lib/card/card-title';
 import CardText from 'material-ui/lib/card/card-text';
-import EntitiesByLocation from './entity_listings';
+import EntitiesByLocation from './entityListings';
 
 class LocationDetails extends Component {
   static contextTypes = {

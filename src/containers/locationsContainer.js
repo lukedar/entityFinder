@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchLocations, fetchLocation } from '../actions/index';
 import CircularProgress from 'material-ui/lib/circular-progress';
-import LocationsMap from '../components/locations_map';
+import LocationsMap from '../components/locationsMap';
 
 class LocationsContainer extends Component {
   constructor(props) {

@@ -2,11 +2,11 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 import App from './components/app';
-import EntityListings from './components/entity_listings';
-import EntityDetails from './components/entity_details';
-import Locations from './components/locations_map';
-import LocationDetails from './components/location_details';
-import LocationsContainer from './containers/container_locations';
+import EntityListings from './components/entityListings';
+import EntityDetails from './components/entityDetails';
+import Locations from './components/locationsMap';
+import LocationDetails from './components/locationDetails';
+import LocationsContainer from './containers/locationsContainer';
 
 export default (
   <Route path="/" component={App}>

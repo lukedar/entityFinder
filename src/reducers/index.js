@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-import EntitiesReducer from './reducer_entities';
-import LocationsReducer from './reducer_locations';
-import EntitiesByLocation from './reducer_entitiesByLocation';
+import EntitiesReducer from './entitiesReducer';
+import LocationsReducer from './locationsReducer';
+import EntitiesByLocation from './entitiesByLocationReducer';
 
 const rootReducer = combineReducers({
   entities: EntitiesReducer,
