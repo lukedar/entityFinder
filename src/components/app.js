@@ -7,6 +7,13 @@ import AppBar from 'material-ui/lib/app-bar';
 import { Link } from 'react-router';
 
 
+const styles = {
+  appBar: {
+    textAlign: "center"
+  }
+};
+
+
 export default class App extends Component {
 	constructor(props) {
 	   super(props);
@@ -20,6 +27,7 @@ export default class App extends Component {
     return (
       <div>
 	      <AppBar
+	      	style={styles.appBar}
 			    title="Event Finder"
 			    iconClassNameRight="muidocs-icon-navigation-expand-more"
 			    onLeftIconButtonTouchTap={this.handleToggle}

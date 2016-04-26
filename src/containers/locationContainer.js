@@ -6,16 +6,18 @@ import LocationsMap from '../components/locationsMap';
 
 class LocationsContainer extends Component {
   componentWillMount() {
-    this.props.fetchLocations();
+    if (this.props.params.id) {
+      this.props.fetchLocation(this.props.params.id);
+    } 
   }
 
   render() {
-    if (!this.props.locations.length) {
+    if (!this.props.location) {
       return <CircularProgress />;
     }
 
     return(
-        <LocationsMap locationData={this.props.locations} getDirections={false}/>
+        <LocationsMap locationData={this.props.location} getDirections={true} />
       );
 
   }
@@ -23,7 +25,7 @@ class LocationsContainer extends Component {
 
 function mapStateToProps(state) {
   return { 
-    locations: state.locations.all
+    location: state.locations.activeLocation
    };
 }
 
