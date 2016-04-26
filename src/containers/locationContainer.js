@@ -4,7 +4,7 @@ import { fetchLocations, fetchLocation } from '../actions/index';
 import CircularProgress from 'material-ui/lib/circular-progress';
 import LocationsMap from '../components/locationsMap';
 
-class LocationsContainer extends Component {
+class LocationContainer extends Component {
   componentWillMount() {
     if (this.props.params.id) {
       this.props.fetchLocation(this.props.params.id);
@@ -29,4 +29,4 @@ function mapStateToProps(state) {
    };
 }
 
-export default connect(mapStateToProps, { fetchLocations, fetchLocation })(LocationsContainer);
+export default connect(mapStateToProps, { fetchLocations, fetchLocation })(LocationContainer);
