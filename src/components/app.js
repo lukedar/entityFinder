@@ -10,9 +10,11 @@ import { Link } from 'react-router';
 const styles = {
   appBar: {
     textAlign: "center"
+  },
+  link: {
+    textDecoration: 'none'
   }
 };
-
 
 export default class App extends Component {
 	constructor(props) {
@@ -38,10 +40,10 @@ export default class App extends Component {
 	          open={this.state.open}
 	          onRequestChange={open => this.setState({open})}
 	        >
-	        <Link to={'/'}><MenuItem onTouchTap={this.handleClose}>Events</MenuItem></Link>
-	        <Link to={'/locations'}><MenuItem onTouchTap={this.handleClose}>Locations</MenuItem></Link>
-	        <Link to={'/locations'}><MenuItem onTouchTap={this.handleClose}>Search</MenuItem></Link>
-	        <Link to={'/locations'}><MenuItem onTouchTap={this.handleClose}>My Events</MenuItem></Link>
+	        <Link style={styles.link} to={'/'}><MenuItem onTouchTap={this.handleClose}>Events</MenuItem></Link>
+	        <Link style={styles.link} to={'/locations'}><MenuItem onTouchTap={this.handleClose}>Locations</MenuItem></Link>
+	        <Link style={styles.link} to={'/locations'}><MenuItem onTouchTap={this.handleClose}>Search</MenuItem></Link>
+	        <Link style={styles.link} to={'/locations'}><MenuItem onTouchTap={this.handleClose}>My Events</MenuItem></Link>
 	        </LeftNav>
         {this.props.children}
       </div>
