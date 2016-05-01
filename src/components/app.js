@@ -10,7 +10,7 @@ import { Link } from 'react-router';
 const styles = {
   appBar: {
     textAlign: "center"
-  },
+  },	
   link: {
     textDecoration: 'none'
   }
@@ -24,6 +24,14 @@ export default class App extends Component {
 
   handleToggle = () => this.setState({open: !this.state.open});
   handleClose = () => this.setState({open: false});
+
+  componentWillMount() {
+      this.lock = new Auth0Lock('83jvTjeBnhM7J7v054OMqhpHoFRCWhZr', 'entity.auth0.com');
+  }
+
+  showLock() {
+    this.lock.show();
+  }
 
   render() {
     return (
@@ -43,7 +51,7 @@ export default class App extends Component {
 	        <Link style={styles.link} to={'/'}><MenuItem onTouchTap={this.handleClose}>Events</MenuItem></Link>
 	        <Link style={styles.link} to={'/locations'}><MenuItem onTouchTap={this.handleClose}>Locations</MenuItem></Link>
 	        <Link style={styles.link} to={'/locations'}><MenuItem onTouchTap={this.handleClose}>Search</MenuItem></Link>
-	        <Link style={styles.link} to={'/locations'}><MenuItem onTouchTap={this.handleClose}>My Events</MenuItem></Link>
+	        <Link style={styles.link} to={'/locations'}><MenuItem onTouchTap={this.showLock.bind(this)}>My Events</MenuItem></Link>
 	        </LeftNav>
         {this.props.children}
       </div>
