@@ -6,6 +6,12 @@ import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
 import Divider from 'material-ui/lib/divider';
 
+const styles = {
+  link: {
+    textDecoration: 'none'
+  }
+}
+
 class EntityListings extends Component {
   static get propTypes() {
     return {
@@ -16,7 +22,7 @@ class EntityListings extends Component {
   renderEntities(entities) {
     return entities.map((entity) => {
       return (
-        <Link to={"entity/" + entity.nid}>
+        <Link style={styles.link} to={"entity/" + entity.nid}>
           <ListItem
             primaryText={entity.title}
             secondaryText={entity.type.name}
