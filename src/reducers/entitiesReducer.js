@@ -1,13 +1,13 @@
 import { FETCH_ENTITIES, FETCH_ENTITY } from '../actions/index';
 
-const INITIAL_STATE = { all: [], activeEntity: null };
+const INITIAL_STATE = { items: [], activeEntity: null };
 
 export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
 	  case FETCH_ENTITIES:
 	    return { 
 	    	...state, 
-	    	all: action.payload.data 
+	    	items: action.payload.data 
 	   };
 
 	  case FETCH_ENTITY:

@@ -72,6 +72,8 @@ class EntityDetails extends Component {
 }
 
 function mapStateToProps(state) {
+
+  console.log(state);
   return { entity: state.entities.activeEntity };
 }
 

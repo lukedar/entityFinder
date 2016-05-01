@@ -22,8 +22,10 @@ class LocationsContainer extends Component {
 }
 
 function mapStateToProps(state) {
+  
+  console.log(state);
   return { 
-    locations: state.locations.all
+    locations: state.locations.items
    };
 }
 

@@ -24,6 +24,8 @@ class LocationContainer extends Component {
 }
 
 function mapStateToProps(state) {
+
+  console.log(state);
   return { 
     location: state.locations.activeLocation
    };

@@ -5,7 +5,7 @@ import CircularProgress from 'material-ui/lib/circular-progress';
 import Card from 'material-ui/lib/card/card';
 import CardTitle from 'material-ui/lib/card/card-title';
 import CardText from 'material-ui/lib/card/card-text';
-import EntitiesByLocation from './entityListings';
+import EntityListingsContainer from '../containers/entityListingsContainer';
 
 class LocationDetails extends Component {
   static contextTypes = {
@@ -23,6 +23,8 @@ class LocationDetails extends Component {
       return <CircularProgress />;
     }
 
+    console.log(location[0].nid);
+
     return (
       <div>
         <Card>
@@ -31,7 +33,7 @@ class LocationDetails extends Component {
               {location[0].description.value} <br/>
             </CardText>
         </Card>
-        <EntitiesByLocation locationId={location[0].nid} listingsTitle={'Upcoming Events'}/>
+        <EntityListingsContainer locationId={location[0].nid} listingsTitle={'Upcoming Events'}/>
       </div>
     );
   }
