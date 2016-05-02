@@ -1,4 +1,4 @@
-import { FETCH_LOCATIONS, FETCH_LOCATION, FETCH_ENTITIES_BY_LOCATION } from '../actions/index';
+import { FETCH_LOCATIONS, FETCH_LOCATION } from '../actions/index';
 
 const INITIAL_STATE = { items: [], activeLocation: null };
 
@@ -16,12 +16,6 @@ export default function(state = INITIAL_STATE, action) {
 	    	activeLocation: action.payload.data 
 	    };
 
-	   case FETCH_ENTITIES_BY_LOCATION:
-	    return { 
-	    	...state, 
-	    	locationEntities: action.payload.data 
-	    };
-	    
 	  default:
 	    return state;
   }

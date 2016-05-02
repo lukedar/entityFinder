@@ -25,16 +25,13 @@ class EntityListingsContainer extends Component {
 
     return (
       <div>
-        <EntityListings entities={!this.props.locationId ? this.props.entities : this.props.entitiesByLocation} />  
+        <EntityListings {...this.props} entities={!this.props.locationId ? this.props.entities : this.props.entitiesByLocation} />  
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-
-  console.log(state);
-
   return { 
     entities: state.entities.items, 
     entitiesByLocation: state.entitiesByLocation.entities

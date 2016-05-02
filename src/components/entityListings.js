@@ -33,9 +33,15 @@ class EntityListings extends Component {
   }
 
   render() {
+
+    const listTitle = this.props.listingsTitle;
+
+    console.log(listTitle);
+
     return (
       <div>
-        <List>
+        <Divider />
+        <List subheader={listTitle}>
           {this.renderEntities(this.props.entities)}
         </List>
       </div>

@@ -23,8 +23,6 @@ class LocationDetails extends Component {
       return <CircularProgress />;
     }
 
-    console.log(location[0].nid);
-
     return (
       <div>
         <Card>
@@ -39,7 +37,7 @@ class LocationDetails extends Component {
   }
 }
 
-function mapStateToProps(state) {   
+function mapStateToProps(state) {  
   return { location: state.locations.activeLocation};
 }
 
