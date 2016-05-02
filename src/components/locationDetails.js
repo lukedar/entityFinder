@@ -7,6 +7,13 @@ import CardTitle from 'material-ui/lib/card/card-title';
 import CardText from 'material-ui/lib/card/card-text';
 import EntityListingsContainer from '../containers/entityListingsContainer';
 
+const styles = {
+  card: {
+    marginBottom: '10px'  
+  }
+};
+
+
 class LocationDetails extends Component {
   static contextTypes = {
     router: PropTypes.object
@@ -25,10 +32,10 @@ class LocationDetails extends Component {
 
     return (
       <div>
-        <Card>
+        <Card style={styles.card}>
           <CardTitle title={location[0].title} />
             <CardText>
-              {location[0].description.value} <br/>
+              {location[0].description.value}
             </CardText>
         </Card>
         <EntityListingsContainer locationId={location[0].nid} listingsTitle={'Upcoming Events'}/>

@@ -5,6 +5,7 @@ import CircularProgress from 'material-ui/lib/circular-progress';
 import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
 import Divider from 'material-ui/lib/divider';
+import Avatar from 'material-ui/lib/avatar';
 
 const styles = {
   link: {
@@ -21,11 +22,16 @@ class EntityListings extends Component {
 
   renderEntities(entities) {
     return entities.map((entity) => {
+      
+      console.log(entity);
       return (
         <Link style={styles.link} to={"entity/" + entity.nid}>
           <ListItem
             primaryText={entity.title}
             secondaryText={entity.type.name}
+            leftAvatar={
+              <Avatar src={entity.type.imageUrl} />
+            }
           />
         </Link>
       );
@@ -36,11 +42,8 @@ class EntityListings extends Component {
 
     const listTitle = this.props.listingsTitle;
 
-    console.log(listTitle);
-
     return (
       <div>
-        <Divider />
         <List subheader={listTitle}>
           {this.renderEntities(this.props.entities)}
         </List>
