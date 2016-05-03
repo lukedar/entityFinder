@@ -22,9 +22,6 @@ class EntityListings extends Component {
 
   renderEntities(entities) {
     return entities.map((entity) => {
-
-      console.log(entity);
-
       return (
         <Link style={styles.link} to={"entity/" + entity.nid}>
           <ListItem

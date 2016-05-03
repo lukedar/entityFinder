@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import LeftNav from 'material-ui/lib/left-nav';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import RaisedButton from 'material-ui/lib/raised-button';
+import { receiveLogin } from '../actions/index';
 import AppBar from 'material-ui/lib/app-bar';
 import { Link } from 'react-router';
 import { loginUser } from '../actions';
@@ -27,11 +28,8 @@ class App extends Component {
   handleClose = () => this.setState({open: false});
 
   componentWillMount() {
-    console.log('will mount');
-
     this.lock = new Auth0Lock('83jvTjeBnhM7J7v054OMqhpHoFRCWhZr', 'entity.auth0.com');
     this.state.idToken = this.getIdToken();
-
 
     this.lock.getProfile(this.state.idToken, function (err, profile) {
       if (err) {
@@ -43,8 +41,22 @@ class App extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    console.log('is updating');
     this.state.idToken = this.getIdToken();
+
+    const { dispatch} = this.props;
+
+    this.lock.getProfile(this.state.idToken, function (err, profile) {
+      if (err) {
+        console.log("Error loading the Profile", err);
+        return;
+      }
+
+      dispatch(receiveLogin({
+        userProfile: profile,
+        idToken: this.state.idToken
+      }));
+
+    }.bind(this));
   }
 
   showLock() {
@@ -71,9 +83,9 @@ class App extends Component {
   }
 
   render() {
-    const { dispatch, isAuthenticated, errorMessage } = this.props;
+    const { isAuthenticated } = this.props;
 
-    console.log(this.lock.getProfile);
+    console.log(isAuthenticated);
 
     return (
       <div>
@@ -93,7 +105,11 @@ class App extends Component {
 	        <Link style={styles.link} to={'/locations'}><MenuItem onTouchTap={this.handleClose}>Locations</MenuItem></Link>
 	        <Link style={styles.link} to={'/locations'}><MenuItem onTouchTap={this.handleClose}>Search</MenuItem></Link>
 
-	        <MenuItem onTouchTap={this.showLock.bind(this)}>My Events</MenuItem>
+          {isAuthenticated ? 
+            <MenuItem onTouchTap={this.showLock.bind(this)}>My Events</MenuItem> : 
+            <MenuItem onTouchTap={this.showLock.bind(this)}>Login</MenuItem>
+          }
+	        
 	        </LeftNav>
         {this.props.children}
       </div>
@@ -110,13 +126,8 @@ App.propTypes = {
 // These props come from the application's
 // state when it is started
 function mapStateToProps(state) {
-
-  const { auth } = state;
-  const { isAuthenticated, errorMessage } = auth;
-
   return {
-    isAuthenticated,
-    errorMessage
+    isAuthenticated: state.auth.isAuthenticated
   }
 }
 
