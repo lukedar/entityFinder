@@ -6,7 +6,7 @@ import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from '../actions'
 export default function auth(state = {
     isAuthenticated: localStorage.getItem('id_token') ? true : false,
     idToken: '',
-    userProfile: {}
+    userProfile: null
   }, action) {
   switch (action.type) {
     case LOGIN_SUCCESS:

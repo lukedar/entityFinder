@@ -29,27 +29,29 @@ class App extends Component {
 
   componentWillMount() {
     this.lock = new Auth0Lock('83jvTjeBnhM7J7v054OMqhpHoFRCWhZr', 'entity.auth0.com');
-    this.state.idToken = this.getIdToken();
+    this.state.idToken = this.checkAndSetUserIdToken();
 
-    this.lock.getProfile(this.state.idToken, function (err, profile) {
-      if (err) {
-        console.log("Error loading the Profile", err);
-        return;
-      }
-      console.log(profile);
-    }.bind(this));
+    if (this.state.idToken && !this.props.userProfile) {
+      this.dispatchUserProfile(this.state.idToken); 
+    }
   }
 
   componentWillUpdate(nextProps, nextState) {
-    this.state.idToken = this.getIdToken();
+    this.state.idToken = this.checkAndSetUserIdToken();
+    
+    if (this.state.idToken && !this.props.userProfile) {
+      this.dispatchUserProfile(this.state.idToken); 
+    }
+  }
 
-    const { dispatch} = this.props;
-
-    this.lock.getProfile(this.state.idToken, function (err, profile) {
+  dispatchUserProfile(idToken) {
+    this.lock.getProfile(idToken, function (err, profile) {
       if (err) {
         console.log("Error loading the Profile", err);
         return;
       }
+
+      const { dispatch } = this.props;
 
       dispatch(receiveLogin({
         userProfile: profile,
@@ -63,12 +65,11 @@ class App extends Component {
     this.lock.show();
   }
 
-  getIdToken() {
-    // First, check if there is already a JWT in local storage
+  checkAndSetUserIdToken() {
     var idToken = localStorage.getItem('id_token');
     var authHash = this.lock.parseHash(window.location.hash);
-    // If there is no JWT in local storage and there is one in the URL hash,
-    // save it in local storage
+    
+    // Set Token to local storage.
     if (!idToken && authHash) {
       if (authHash.id_token) {
         idToken = authHash.id_token
@@ -79,13 +80,12 @@ class App extends Component {
         console.log("Error signing in", authHash);
       }
     }
+
     return idToken;
   }
 
   render() {
     const { isAuthenticated } = this.props;
-
-    console.log(isAuthenticated);
 
     return (
       <div>
@@ -123,11 +123,13 @@ App.propTypes = {
   errorMessage: PropTypes.string
 }
 
-// These props come from the application's
-// state when it is started
+// Map application state.
 function mapStateToProps(state) {
+  console.log(state);
+
   return {
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    userProfile: state.auth.userProfile
   }
 }
 

@@ -23,7 +23,7 @@ class EntityListings extends Component {
   renderEntities(entities) {
     return entities.map((entity) => {
       return (
-        <Link style={styles.link} to={"entity/" + entity.nid}>
+        <Link key={entity.nid} style={styles.link} to={"entity/" + entity.nid}>
           <ListItem
             primaryText={entity.title}
             secondaryText={entity.type.name}
