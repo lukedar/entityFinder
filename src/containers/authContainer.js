@@ -3,12 +3,20 @@ import { connect } from 'react-redux';
 
 class Authentication extends Component {
   render() {
+  	// Handle Anonuser render
+  	if (this.props.anonUserOnly && !this.props.isAuthenticated) {
+  		return(<div>{this.props.children}</div>);
+  	}
+  	else if (this.props.anonUserOnly && this.props.isAuthenticated) {
+  		return null;
+  	}
+
+  	// Handle authenticated user.
     if (this.props.isAuthenticated) {
        return(<div>{this.props.children}</div>);
     }
-
-    if (!this.props.isAuthenticated) {
-      return null;
+    else if (!this.props.isAuthenticated) {
+    	return null;
     }
   }
 }

@@ -103,11 +103,17 @@ class App extends Component {
 	        <Link style={styles.link} to={'/'}><MenuItem onTouchTap={this.handleClose}>Events</MenuItem></Link>
 	        <Link style={styles.link} to={'/locations'}><MenuItem onTouchTap={this.handleClose}>Locations</MenuItem></Link>
 	        <Link style={styles.link} to={'/locations'}><MenuItem onTouchTap={this.handleClose}>Search</MenuItem></Link>
-            
-          <MenuItem onTouchTap={this.showLock.bind(this)}>Only when Logged OUt</MenuItem>
+          
+          <Authentication>
+            <MenuItem onTouchTap={this.showLock.bind(this)}>My Listings</MenuItem>
+          </Authentication>
+
+          <Authentication anonUserOnly={true}>            
+            <MenuItem onTouchTap={this.showLock.bind(this)}>Login</MenuItem>
+          </Authentication>
 
           <Authentication>
-            <MenuItem onTouchTap={this.showLock.bind(this)}>Only when Logged in</MenuItem>
+            <MenuItem onTouchTap={this.showLock.bind(this)}>Logout</MenuItem>
           </Authentication>
 	        
 	        </LeftNav>
@@ -125,8 +131,6 @@ App.propTypes = {
 
 // Map application state.
 function mapStateToProps(state) {
-  console.log(state);
-
   return {
     isAuthenticated: state.auth.isAuthenticated,
     userProfile: state.auth.userProfile
