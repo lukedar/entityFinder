@@ -7,7 +7,7 @@ import { receiveLogin } from '../actions/index';
 import AppBar from 'material-ui/lib/app-bar';
 import { Link } from 'react-router';
 import { loginUser } from '../actions';
-
+import Authentication from '../containers/authContainer';
 
 const styles = {
   appBar: {
@@ -86,7 +86,6 @@ class App extends Component {
 
   render() {
     const { isAuthenticated } = this.props;
-
     return (
       <div>
 	      <AppBar
@@ -104,11 +103,12 @@ class App extends Component {
 	        <Link style={styles.link} to={'/'}><MenuItem onTouchTap={this.handleClose}>Events</MenuItem></Link>
 	        <Link style={styles.link} to={'/locations'}><MenuItem onTouchTap={this.handleClose}>Locations</MenuItem></Link>
 	        <Link style={styles.link} to={'/locations'}><MenuItem onTouchTap={this.handleClose}>Search</MenuItem></Link>
+            
+          <MenuItem onTouchTap={this.showLock.bind(this)}>Only when Logged OUt</MenuItem>
 
-          {isAuthenticated ? 
-            <MenuItem onTouchTap={this.showLock.bind(this)}>My Events</MenuItem> : 
-            <MenuItem onTouchTap={this.showLock.bind(this)}>Login</MenuItem>
-          }
+          <Authentication>
+            <MenuItem onTouchTap={this.showLock.bind(this)}>Only when Logged in</MenuItem>
+          </Authentication>
 	        
 	        </LeftNav>
         {this.props.children}
