@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+export const FETCH_CONFIG = 'FETCH_CONFIG';
+
 export const FETCH_ENTITIES = 'FETCH_ENTITIES';
 export const FETCH_ENTITY = 'FETCH_ENTITY';
 export const FETCH_ENTITIES_BY_LOCATION = 'FETCH_ENTITIES_BY_LOCATION';
@@ -11,9 +13,21 @@ export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
+const CONFIG_URL = 'http://entity-cms.local/api/v1/app-config';
 const ENTITIES_URL = 'http://entity-cms.local/api/v1/entities';
 const LOCATIONS_URL = 'http://entity-cms.local/api/v1/locations';
 
+
+export function fetchConfig() {
+  const request = axios.get(CONFIG_URL);
+
+  console.log('fetching config request', request);
+
+  return {
+    type: FETCH_CONFIG,
+    payload: request
+  };
+}
 
 export function fetchEntities() {
   const request = axios.get(ENTITIES_URL);

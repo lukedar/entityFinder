@@ -104,17 +104,19 @@ class App extends Component {
 	        <Link style={styles.link} to={'/locations'}><MenuItem onTouchTap={this.handleClose}>Locations</MenuItem></Link>
 	        <Link style={styles.link} to={'/locations'}><MenuItem onTouchTap={this.handleClose}>Search</MenuItem></Link>
           
-          <Authentication>
-            <MenuItem onTouchTap={this.showLock.bind(this)}>My Listings</MenuItem>
-          </Authentication>
-
           <Authentication anonUserOnly={true}>            
             <MenuItem onTouchTap={this.showLock.bind(this)}>Login</MenuItem>
           </Authentication>
 
           <Authentication>
-            <MenuItem onTouchTap={this.showLock.bind(this)}>Logout</MenuItem>
+            <MenuItem onTouchTap={this.showLock.bind(this)}>My Listings</MenuItem>
           </Authentication>
+
+          <Authentication>
+            <MenuItem onTouchTap={this.showLock.bind(this)}>My Listings</MenuItem>
+          </Authentication>
+
+
 	        
 	        </LeftNav>
         {this.props.children}

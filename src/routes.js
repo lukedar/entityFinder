@@ -8,8 +8,10 @@ import Locations from './components/locationsMap';
 import LocationDetails from './components/locationDetails';
 import LocationsContainer from './containers/locationsContainer';
 import LocationContainer from './containers/locationContainer';
+import ConfigContainer from './containers/configContainer';
 
 export default (
+
   <Route path="/" component={App}>
     <IndexRoute component={EntityListingsContainer} />
     <Route path="entity/:id" component={EntityDetails} />

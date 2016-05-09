@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 class Authentication extends Component {
@@ -22,13 +22,14 @@ class Authentication extends Component {
 }
 
 
+Authentication.propTypes = {
+  anonUserOnly: PropTypes.bool
+}
+
 // Map application state.
 function mapStateToProps(state) {
-  //console.log('users loged in', state.auth.isAuthenticated);
-
   return {
-    isAuthenticated: state.auth.isAuthenticated,
-    userProfile: state.auth.userProfile
+    isAuthenticated: state.auth.isAuthenticated
   }
 }
 
