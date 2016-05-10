@@ -21,7 +21,7 @@ const styles = {
   }
 };
 
-const myFirebaseRef = new Firebase('https://granulr.firebaseio.com'); 
+const myFirebaseRef = new Firebase('https://granulr.firebaseio.com/'); 
 
 class EntityDetails extends Component {
   static contextTypes = {
@@ -40,11 +40,6 @@ class EntityDetails extends Component {
 
   setUserListingsToFirebase() {
     if (this.props.auth.isAuthenticated && this.props.auth.userProfile) {
-
-      console.log(this.props);
-
-     
-      
       var userId = {},
           userId = this.props.auth.userProfile.user_id;
       
@@ -54,13 +49,17 @@ class EntityDetails extends Component {
 
       console.log(userId, currentUserName, entityId, entityTitle);
 
-      myFirebaseRef.child(userId).set({
+
+      myFirebaseRef.child('users').child(userId).set({
         name: currentUserName,
         entities: [{
           nid: entityId,
           title: entityTitle
         }]
       });
+
+      var entitiesRef = myFirebaseRef.child('users').child(userId).child('entities');
+      entitiesRef.push({ nid: entityId, title: entityTitle});
 
     }
     else {
