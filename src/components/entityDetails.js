@@ -49,16 +49,31 @@ class EntityDetails extends Component {
 
 
       myFirebaseRef.once('value', function(snapshot) {
+        // Add user if they dont already exist.
         var userIdExists = snapshot.child('users').child(userId).exists();
         if (!userIdExists) {
           myFirebaseRef.child('users').child(userId).set({userName: currentUserName});
         }
 
-        // TODO check if entity exists befpre adding.
+
+        // Check if no entites then add first one.
         myFirebaseRef.child('users').child(userId).child('entities').push({
           nid: entityId,
           title: entityTitle
         });
+
+
+        var userEntities = snapshot.child('users').child(userId).child('entities');
+        userEntities.forEach(function(userEntity) {
+          if (entityId !== userEntity.val().nid) {
+            myFirebaseRef.child('users').child(userId).child('entities').push({
+              nid: entityId,
+              title: entityTitle
+              });
+            }
+        });
+
+
 
         var userEntitySnapshot = snapshot.child('users').child(userId).child('entities'); 
         var userEntityList = [];
