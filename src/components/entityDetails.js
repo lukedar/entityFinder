@@ -9,6 +9,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import PlaceIcon from 'material-ui/lib/svg-icons/maps/place';
 import AddIcon from 'material-ui/lib/svg-icons/content/add';
 import Firebase from 'Firebase';
+import _ from 'lodash';
 
 const styles = {
   buttonWrapper: {
@@ -44,37 +45,52 @@ class EntityDetails extends Component {
       var currentUserName = this.props.auth.userProfile.name;
       var entityId = this.props.entity[0].nid;
       var entityTitle = this.props.entity[0].title;
+      var entityDate = this.props.entity[0].date.value;
+      var entityLocation = this.props.entity[0].location;
 
-      console.log(userId, currentUserName, entityId, entityTitle);
-
+      console.log(this.props.entity, currentUserName, entityId, entityTitle, entityDate);
 
       myFirebaseRef.once('value', function(snapshot) {
-        // Add user if they dont already exist.
         var userIdExists = snapshot.child('users').child(userId).exists();
+        // Set up iser and intial entity entry.
         if (!userIdExists) {
-          myFirebaseRef.child('users').child(userId).set({userName: currentUserName});
+          myFirebaseRef.child('users').child(userId).set({
+            userName: currentUserName,
+            location: '123,313'
+          });
+
+          myFirebaseRef.child('users').child(userId).child('entities').push({
+            nid: entityId,
+            title: entityTitle,
+            date: entityDate,
+            location: {
+              nid: entityLocation.nid,
+              title: entityLocation.title
+            }
+          });
+        }
+        
+        if (userIdExists)  {
+          var userEntities = snapshot.child('users').child(userId).child('entities');
+          var currentEntityExistsInUserList = _.find(userEntities.val(), {'nid': entityId});
+
+          if (!currentEntityExistsInUserList) {
+            myFirebaseRef.child('users').child(userId).child('entities').push({
+              nid: entityId,
+              title: entityTitle,
+              date: entityDate,
+              location: {
+                nid: entityLocation.nid,
+                title: entityLocation.title
+              }
+            });
+          }
         }
 
 
-        // Check if no entites then add first one.
-        myFirebaseRef.child('users').child(userId).child('entities').push({
-          nid: entityId,
-          title: entityTitle
-        });
 
 
-        var userEntities = snapshot.child('users').child(userId).child('entities');
-        userEntities.forEach(function(userEntity) {
-          if (entityId !== userEntity.val().nid) {
-            myFirebaseRef.child('users').child(userId).child('entities').push({
-              nid: entityId,
-              title: entityTitle
-              });
-            }
-        });
-
-
-
+        // Build user list.
         var userEntitySnapshot = snapshot.child('users').child(userId).child('entities'); 
         var userEntityList = [];
         userEntitySnapshot.forEach(function(userEntity) {
@@ -138,6 +154,9 @@ class EntityDetails extends Component {
 }
 
 function mapStateToProps(state) {
+
+  console.log(state);
+
   return { 
     entity: state.entities.activeEntity,
     auth: state.auth
