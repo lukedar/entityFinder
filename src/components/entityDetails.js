@@ -40,9 +40,7 @@ class EntityDetails extends Component {
 
   setUserListingsToFirebase() {
     if (this.props.auth.isAuthenticated && this.props.auth.userProfile) {
-      var userId = {},
-          userId = this.props.auth.userProfile.user_id;
-      
+      var userId = this.props.auth.userProfile.user_id;
       var currentUserName = this.props.auth.userProfile.name;
       var entityId = this.props.entity[0].nid;
       var entityTitle = this.props.entity[0].title;
@@ -50,17 +48,28 @@ class EntityDetails extends Component {
       console.log(userId, currentUserName, entityId, entityTitle);
 
 
-      myFirebaseRef.child('users').child(userId).set({
-        name: currentUserName,
-        entities: [{
+      myFirebaseRef.once('value', function(snapshot) {
+        var userIdExists = snapshot.child('users').child(userId).exists();
+        if (!userIdExists) {
+          myFirebaseRef.child('users').child(userId).set({userName: currentUserName});
+        }
+
+        // TODO check if entity exists befpre adding.
+        myFirebaseRef.child('users').child(userId).child('entities').push({
           nid: entityId,
           title: entityTitle
-        }]
+        });
+
+        var userEntitySnapshot = snapshot.child('users').child(userId).child('entities'); 
+        var userEntityList = [];
+        userEntitySnapshot.forEach(function(userEntity) {
+          userEntityList.push(userEntity.val());
+        });
+
+        // TODO use userEntityList for creating user list.
+        console.log(userEntityList);
+
       });
-
-      var entitiesRef = myFirebaseRef.child('users').child(userId).child('entities');
-      entitiesRef.push({ nid: entityId, title: entityTitle});
-
     }
     else {
       console.log('you must be logged in to add to my events');
@@ -73,6 +82,9 @@ class EntityDetails extends Component {
     if (!entity || entity[0].nid !== this.props.params.id) {
       return <CircularProgress />;
     }
+
+
+
 
     return (
       <div>
