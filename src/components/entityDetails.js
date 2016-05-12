@@ -18,7 +18,8 @@ const styles = {
   },
 
   button: {
-    margin: 15,
+    margin: '15px 10px',
+    verticalAlign: 'top'
   }
 };
 
@@ -47,8 +48,6 @@ class EntityDetails extends Component {
       var entityTitle = this.props.entity[0].title;
       var entityDate = this.props.entity[0].date.value;
       var entityLocation = this.props.entity[0].location;
-
-      console.log(this.props.entity, currentUserName, entityId, entityTitle, entityDate);
 
       myFirebaseRef.once('value', function(snapshot) {
         var userIdExists = snapshot.child('users').child(userId).exists();
