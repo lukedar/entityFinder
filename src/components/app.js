@@ -10,15 +10,6 @@ import { loginUser } from '../actions';
 import Authentication from '../containers/authContainer';
 import ConfigContainer from '../containers/configContainer';
 
-const styles = {
-  appBar: {
-    textAlign: "center"
-  },	
-  link: {
-    textDecoration: 'none'
-  }
-};
-
 class App extends Component {
 	constructor(props) {
 	   super(props);
@@ -29,9 +20,6 @@ class App extends Component {
   handleClose = () => this.setState({open: false});
 
   componentWillMount() {
-
-    console.log('App component will mount');
-
     this.lock = new Auth0Lock('83jvTjeBnhM7J7v054OMqhpHoFRCWhZr', 'entity.auth0.com');
     this.state.idToken = this.checkAndSetUserIdToken();
 
@@ -88,8 +76,23 @@ class App extends Component {
     return idToken;
   }
 
+
+  getBrandColorByKey() {
+    return this.props.config.theme.brand.titleBarBackgroundColor;
+  }
+
   render() {
     const { isAuthenticated } = this.props;
+    const styles = {
+      appBar: {
+        textAlign: "center",
+        backgroundColor: this.getBrandColorByKey()
+      },  
+      link: {
+        textDecoration: 'none'
+      }
+    };
+
     return (
       <div>
 	      <AppBar

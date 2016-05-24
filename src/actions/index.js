@@ -20,7 +20,6 @@ const LOCATIONS_URL = 'http://entity-cms.local/api/v1/locations';
 
 export function fetchConfig() {
   const request = axios.get(CONFIG_URL);
-
   console.log('fetching config request', request);
 
   return {
@@ -28,6 +27,17 @@ export function fetchConfig() {
     payload: request
   };
 }
+
+
+function myAsyncAction() {
+   return dispatch => new Promise((resolve, reject) => {
+      request().then((response) => {
+         dispatch({type: SOME_ACTION, value: response.value});
+         resolve(response);
+      });
+   });
+}
+
 
 export function fetchEntities() {
   const request = axios.get(ENTITIES_URL);
