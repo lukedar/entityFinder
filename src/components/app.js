@@ -8,6 +8,7 @@ import AppBar from 'material-ui/lib/app-bar';
 import { Link } from 'react-router';
 import { loginUser } from '../actions';
 import Authentication from '../containers/authContainer';
+import ConfigContainer from '../containers/configContainer';
 
 const styles = {
   appBar: {
@@ -28,6 +29,9 @@ class App extends Component {
   handleClose = () => this.setState({open: false});
 
   componentWillMount() {
+
+    console.log('App component will mount');
+
     this.lock = new Auth0Lock('83jvTjeBnhM7J7v054OMqhpHoFRCWhZr', 'entity.auth0.com');
     this.state.idToken = this.checkAndSetUserIdToken();
 
@@ -116,8 +120,6 @@ class App extends Component {
             <MenuItem onTouchTap={this.showLock.bind(this)}>My Listings</MenuItem>
           </Authentication>
 
-
-	        
 	        </LeftNav>
         {this.props.children}
       </div>
@@ -139,4 +141,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(ConfigContainer(App));

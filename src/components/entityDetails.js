@@ -112,10 +112,7 @@ class EntityDetails extends Component {
     if (!entity || entity[0].nid !== this.props.params.id) {
       return <CircularProgress />;
     }
-
-
-
-
+    
     return (
       <div>
         <Card>
