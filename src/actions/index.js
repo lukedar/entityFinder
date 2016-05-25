@@ -9,9 +9,9 @@ export const FETCH_ENTITIES_BY_LOCATION = 'FETCH_ENTITIES_BY_LOCATION';
 export const FETCH_LOCATIONS = 'FETCH_LOCATIONS'
 export const FETCH_LOCATION = 'FETCH_LOCATION';
 
-export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const LOGOUT_USER = 'LOGOUT_USER';
+
 
 const CONFIG_URL = 'http://entity-cms.local/api/v1/app-config';
 const ENTITIES_URL = 'http://entity-cms.local/api/v1/entities';
@@ -91,5 +91,15 @@ export function receiveLogin(action) {
     isAuthenticated: true,
     idToken: action.idToken,
     userProfile: action.userProfile
+  }
+}
+
+// Authentication
+export function logoutUser(action) {
+  return {
+    type: LOGOUT_USER,
+    isAuthenticated: false,
+    idToken: null,
+    userProfile: null
   }
 }

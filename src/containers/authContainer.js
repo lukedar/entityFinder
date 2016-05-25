@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-class Authentication extends Component {
+class Auth extends Component {
+
   render() {
   	// Handle Anonuser render
   	if (this.props.anonUserOnly && !this.props.isAuthenticated) {
@@ -22,7 +23,7 @@ class Authentication extends Component {
 }
 
 
-Authentication.propTypes = {
+Auth.propTypes = {
   anonUserOnly: PropTypes.bool
 }
 
@@ -33,4 +34,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(Authentication);
+export default connect(mapStateToProps)(Auth);

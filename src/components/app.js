@@ -6,8 +6,8 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import { receiveLogin } from '../actions/index';
 import AppBar from 'material-ui/lib/app-bar';
 import { Link } from 'react-router';
-import { loginUser } from '../actions';
-import Authentication from '../containers/authContainer';
+import { loginUser, logoutUser } from '../actions';
+import Auth from '../containers/authContainer';
 import ConfigContainer from '../containers/configContainer';
 
 class App extends Component {
@@ -43,9 +43,7 @@ class App extends Component {
         return;
       }
 
-      const { dispatch } = this.props;
-
-      dispatch(receiveLogin({
+      this.props.dispatch(receiveLogin({
         userProfile: profile,
         idToken: this.state.idToken
       }));
@@ -76,9 +74,21 @@ class App extends Component {
     return idToken;
   }
 
-
   getBrandColorByKey() {
     return this.props.config.theme.brand.titleBarBackgroundColor;
+  }
+
+  logoutCurrentUser() {
+    console.log('logginout');
+    window.localStorage.clear();
+
+    this.props.dispatch(logoutUser({
+      isAuthenticated: false,
+      idToken: null,
+      userProfile: null
+    }));
+    this.setState({open: false});
+    history.pushState("", document.title, window.location.pathname);
   }
 
   render() {
@@ -110,19 +120,16 @@ class App extends Component {
 	        <Link style={styles.link} to={'/'}><MenuItem onTouchTap={this.handleClose}>Events</MenuItem></Link>
 	        <Link style={styles.link} to={'/locations'}><MenuItem onTouchTap={this.handleClose}>Locations</MenuItem></Link>
 	        <Link style={styles.link} to={'/locations'}><MenuItem onTouchTap={this.handleClose}>Search</MenuItem></Link>
-          
-          <Authentication anonUserOnly={true}>            
+
+          <Auth>
+            <MenuItem onTouchTap={this.showLock.bind(this)}>My Events</MenuItem>
+            <MenuItem onTouchTap={this.showLock.bind(this)}>Friends</MenuItem>
+            <MenuItem onTouchTap={this.logoutCurrentUser.bind(this)}>Logout</MenuItem>
+          </Auth>
+
+          <Auth anonUserOnly={true}>            
             <MenuItem onTouchTap={this.showLock.bind(this)}>Login</MenuItem>
-          </Authentication>
-
-          <Authentication>
-            <MenuItem onTouchTap={this.showLock.bind(this)}>My Listings</MenuItem>
-          </Authentication>
-
-          <Authentication>
-            <MenuItem onTouchTap={this.showLock.bind(this)}>My Listings</MenuItem>
-          </Authentication>
-
+          </Auth>
 	        </LeftNav>
         {this.props.children}
       </div>
@@ -138,6 +145,7 @@ App.propTypes = {
 
 // Map application state.
 function mapStateToProps(state) {
+
   return {
     isAuthenticated: state.auth.isAuthenticated,
     userProfile: state.auth.userProfile

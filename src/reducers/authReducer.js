@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from '../actions'
+import { LOGIN_SUCCESS, LOGOUT_USER } from '../actions'
 
 // The auth reducer. The starting state sets authentication
 // based on a token being in local storage. In a real app,
@@ -13,6 +13,13 @@ export default function auth(state = {
       return Object.assign({}, state, {
         isAuthenticated: true,
         errorMessage: '',
+        idToken: action.idToken,
+        userProfile: action.userProfile
+      });
+
+    case LOGOUT_USER:
+      return Object.assign({}, state, {
+        isAuthenticated: false,
         idToken: action.idToken,
         userProfile: action.userProfile
       })

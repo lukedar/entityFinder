@@ -86,9 +86,6 @@ class EntityDetails extends Component {
           }
         }
 
-
-
-
         // Build user list.
         var userEntitySnapshot = snapshot.child('users').child(userId).child('entities'); 
         var userEntityList = [];
