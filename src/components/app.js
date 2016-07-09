@@ -21,7 +21,7 @@ class App extends Component {
 
   componentWillMount() {
     this.lock = new Auth0Lock('83jvTjeBnhM7J7v054OMqhpHoFRCWhZr', 'entity.auth0.com');
-    this.state.idToken = this.checkAndSetUserIdToken();
+    
 
     if (this.state.idToken && !this.props.userProfile) {
       this.dispatchUserProfile(this.state.idToken); 
@@ -52,6 +52,7 @@ class App extends Component {
   }
 
   showLock() {
+    this.state.idToken = this.checkAndSetUserIdToken();
     this.lock.show();
   }
 
@@ -92,7 +93,6 @@ class App extends Component {
   }
 
   render() {
-    const { isAuthenticated } = this.props;
     const styles = {
       appBar: {
         textAlign: "center",
@@ -117,19 +117,23 @@ class App extends Component {
 	          open={this.state.open}
 	          onRequestChange={open => this.setState({open})}
 	        >
-	        <Link style={styles.link} to={'/'}><MenuItem onTouchTap={this.handleClose}>Events</MenuItem></Link>
-	        <Link style={styles.link} to={'/locations'}><MenuItem onTouchTap={this.handleClose}>Locations</MenuItem></Link>
-	        <Link style={styles.link} to={'/locations'}><MenuItem onTouchTap={this.handleClose}>Search</MenuItem></Link>
+  	        <Link style={styles.link} to={'/'}>
+            <MenuItem onTouchTap={this.handleClose}>Events</MenuItem></Link>
+  	        <Link style={styles.link} to={'/locations'}>
+              <MenuItem onTouchTap={this.handleClose}>Locations</MenuItem>
+            </Link>
+  	        <Link style={styles.link} to={'/locations'}><MenuItem onTouchTap={this.handleClose}>Search</MenuItem></Link>
 
-          <Auth>
-            <MenuItem onTouchTap={this.showLock.bind(this)}>My Events</MenuItem>
-            <MenuItem onTouchTap={this.showLock.bind(this)}>Friends</MenuItem>
-            <MenuItem onTouchTap={this.logoutCurrentUser.bind(this)}>Logout</MenuItem>
-          </Auth>
+            <Auth>
+              <Link style={styles.link} to={'/user-entities/'}>My events</Link>
+              <MenuItem onTouchTap={this.showLock.bind(this)}>My Events</MenuItem>
+              <MenuItem onTouchTap={this.showLock.bind(this)}>Friends</MenuItem>
+              <MenuItem onTouchTap={this.logoutCurrentUser.bind(this)}>Logout</MenuItem>
+            </Auth>
 
-          <Auth anonUserOnly={true}>            
-            <MenuItem onTouchTap={this.showLock.bind(this)}>Login</MenuItem>
-          </Auth>
+            <Auth anonUserOnly={true}>            
+              <MenuItem onTouchTap={this.showLock.bind(this)}>Login</MenuItem>
+            </Auth>
 	        </LeftNav>
         {this.props.children}
       </div>

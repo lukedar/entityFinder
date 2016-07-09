@@ -19,13 +19,21 @@ class EntityListingsContainer extends Component {
   }
 
   render() {
-    if (!this.props.locationId && !this.props.entities.length || this.props.locationId && !this.props.entitiesByLocation.length) {
+    if (!this.props.locationId && !this.props.entities.length || 
+      this.props.locationId && !this.props.entitiesByLocation.length) {
       return <CircularProgress />;
+    }
+
+    let entities =  this.props.entities;
+    if (this.props.locationId) {
+      entities = this.props.entitiesByLocation
     }
 
     return (
       <div>
-        <EntityListings {...this.props} entities={!this.props.locationId ? this.props.entities : this.props.entitiesByLocation} />  
+        <EntityListings 
+          {...this.props} 
+          entities={entities} />  
       </div>
     );
   }

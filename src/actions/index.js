@@ -103,3 +103,7 @@ export function logoutUser(action) {
     userProfile: null
   }
 }
+
+export function getUserRelatedEntities() {
+
+}

@@ -1,7 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-
+import Firebase from 'Firebase';
+const myFirebaseRef = new Firebase('https://granulr.firebaseio.com/'); 
 class Auth extends Component {
+
+  componentDidMount() {
+    myFirebaseRef.child('userId').on("value", function(snapshot) {
+      console.log(snapshot.val());
+    });
+  }
 
   render() {
   	// Handle Anonuser render
