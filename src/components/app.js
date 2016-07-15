@@ -20,7 +20,7 @@ class App extends Component {
   handleClose = () => this.setState({open: false});
 
   componentWillMount() {
-    this.lock = new Auth0Lock('83jvTjeBnhM7J7v054OMqhpHoFRCWhZr', 'entity.auth0.com');
+    this.lock = new Auth0Lock('ID HRERE', 'URL HERE');
     
 
     if (this.state.idToken && !this.props.userProfile) {
